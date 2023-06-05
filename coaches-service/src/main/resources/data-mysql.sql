@@ -1,0 +1,7 @@
+insert into coaches (coach_id, team_id, first_name, last_name, email_address, phone_number, salary, title) values ('b15c35ae-c3c1-4c2c-ac5d-0a63277e9389', '123sport', 'Eugenio', 'Matuszkiewicz', 'ematuszkiewicz0@shutterfly.com', '962-296-3078', 8371, 'Subcontractor');
+insert into coaches (coach_id, team_id, first_name, last_name, email_address, phone_number, salary, title) values ('70736e5a-abb1-4cac-b546-f9c2b7669d51', '321sport', 'Rene', 'Malloch', 'rmalloch1@amazon.co.uk', '472-252-0161', 19533, 'Construction Expeditor');
+insert into coaches (coach_id, team_id, first_name, last_name, email_address, phone_number, salary, title) values ('573a1f61-9431-4c40-83e6-e1b090d7d10a', '12sport', 'Lyndel', 'Mitchall', 'lmitchall2@pinterest.com', '180-773-1601', 5990, 'Construction Manager');
+insert into coaches (coach_id, team_id, first_name, last_name, email_address, phone_number, salary, title) values ('80d98aa2-f2d8-4bc7-b3d7-cac3d269b1d0', '13sport', 'Alwyn', 'Elcoat', 'aelcoat3@google.fr', '382-150-1648', 2093, 'Project Manager');
+insert into coaches (coach_id, team_id, first_name, last_name, email_address, phone_number, salary, title) values ('374be8c9-58ff-47fb-bd06-12372585399b', '312sport', 'Reggie', 'Brabben', 'rbrabben4@reference.com', '991-107-4587', 19957, 'Surveyor');
+insert into coaches (coach_id, team_id, first_name, last_name, email_address, phone_number, salary, title) values ('2439b784-a59b-4148-9a50-79fd1171b9e4', '21sport', 'Leann', 'Healks', 'lhealks5@gov.uk', '178-406-5442', 10010, 'Construction Manager');
+

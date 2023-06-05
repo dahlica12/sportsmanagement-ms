@@ -1,0 +1,66 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title System Container Diagram for Sports Management System
+
+
+
+
+
+
+
+
+    Person(athlete, "Athlete", "An athlete of the Sports League with personal sports events.")
+
+
+
+    Person(coach, "Coach", "A coach of the Sports League with personal sports events. ")
+
+
+
+
+
+
+
+System_Boundary(sportsmanagement, "Sports Event Management"){
+
+        Container(web_app, "Web Application", "Container: java and Spring MVC", Delivers the static content and Internet Sports Event Management single page application.)
+        Container(single_page_app, "Single-Page Application", "Javascript, React", "Provides all Sports Event Management functionality via their web browser.")
+        Container(api_gate, "API Gateway", "Java, Spring Boot", "Provides sports event management functionality via a JSON/REST HTTPS API")
+        Container(athlete_micro, "athletes-service", "Java, Spring Boot", "Provides athlete management functionality via a JSON/REST HTTPS API")
+        Container(coach_micro, "coaches-service", "Java, Spring Boot", "Provides coach management functionality via a JSON/REST HTTPS API")
+        Container(team_micro, "teams-service", "Java, Spring Boot", "Provides sports and team management functionality via a JSON/REST HTTPS API")
+        Container(event_micro, "events-service", "Java, Spring Boot", "Aggregator provides event management functionality while combining sports, student, coach and team info via a JSON/REST HTTPS API")
+        ContainerDb(dba, "athlete-db", "MySQL 5.5", "Stores athlete information.")
+        ContainerDb(dbc, "coach-db", "MySQL 5.5", "Stores coach information.")
+        ContainerDb(dbt, "team-db", "MySQL 5.5", "Stores sports and team information.")
+        ContainerDb(dbe, "event-db", "MongoDb / NoSQL Database", "Stores event information.")
+
+        Rel(web_app, single_page_app, "Delivers to customer's web browser")
+        Rel(single_page_app, api_gate, "Makes API calls to", "JSON/REST/HTTPS")
+        Rel(api_gate, athlete_micro, "Represents data from", "JSON/REST/HTTPS")
+        Rel(api_gate, coach_micro, "Represents data from", "JSON/REST/HTTPS")
+        Rel(api_gate, team_micro, "Represents data from", "JSON/REST/HTTPS")
+        Rel(api_gate, event_micro, "Represents data from", "JSON/REST/HTTPS")
+        Rel(athlete_micro, dba, "Reads from and writes to", "SQL")
+        Rel(coach_micro, dbc, "Reads from and writes to", "SQL")
+        Rel(team_micro, dbt, "Reads from and writes to", "SQL")
+        Rel(event_micro, dbe, "Reads from and writes to", "Mongodb NoSql")
+}
+
+Rel(athlete, web_app, "Visits sportsevents.com using", "HTTPS")
+
+
+Rel(coach, web_app, "Visits sportsevents.com using", "HTTPS")
+
+
+
+
+
+
+
+
+
+
+SHOW_LEGEND()
+@enduml

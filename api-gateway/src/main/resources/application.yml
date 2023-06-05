@@ -1,0 +1,48 @@
+#default spring profile
+server:
+  error:
+    include-message: always
+
+logging:
+  level:
+    root: INFO
+    com.sportsmanagment: DEBUG
+
+app:
+  teams-service:
+    host: localhost
+    port: 7001
+  athletes-service:
+    host: localhost
+    port: 7002
+  coaches-service:
+    host: localhost
+    port: 7003
+  events-service:
+    host: localhost
+    port: 7004
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+app:
+  teams-service:
+    port: 8080
+  athletes-service:
+    host: athletes-service
+    port: 8080
+  coaches-service:
+    host: coaches-service
+    port: 8080
+  events-service:
+    host: events-service
+    port: 8080
+
+server:
+  port:8080
+

@@ -1,0 +1,169 @@
+services:
+
+  api-gateway:
+    build: api-gateway
+    hostname: api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - teams-service
+      - athletes-service
+      - coaches-service
+
+
+  athletes-service:
+    build: athletes-service
+    hostname: athletes-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      mysql1:
+        condition: service_healthy
+
+  coaches-service:
+    build: coaches-service
+    hostname: coaches-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      mysql2:
+        condition: service_healthy
+
+  events-service:
+    build: events-service
+    hostname: events-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mongodb
+
+  teams-service:
+    build: teams-service
+    hostname: teams-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      mysql3:
+        condition: service_healthy
+
+  mysql1:
+    image: mysql:5.7
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpwd
+      - MYSQL_DATABASE=athlete-db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pwd
+    volumes:
+      - ./data/mysql1:/var/lib/mysql1
+      - ./data/init.d:/docker-entrypoint-initdb.d
+    healthcheck:
+      test:
+        [
+            "CMD",
+            "mysqladmin",
+            "ping",
+            "-uuser",
+            "-ppwd",
+            "-h",
+            "localhost",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  mysql2:
+    image: mysql:5.7
+    ports:
+      - "3308:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpwd
+      - MYSQL_DATABASE=coach-db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pwd
+    volumes:
+      - ./data/mysql2:/var/lib/mysql2
+      - ./data/init.d:/docker-entrypoint-initdb.d
+    healthcheck:
+      test:
+        [
+            "CMD",
+            "mysqladmin",
+            "ping",
+            "-uuser",
+            "-ppwd",
+            "-h",
+            "localhost",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  mysql3:
+    image: mysql:5.7
+    container_name: MySql3
+    ports:
+      - "3309:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpwd
+      - MYSQL_DATABASE=team-db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pwd
+    volumes:
+      - ./data/mysql3:/var/lib/mysql3
+      - ./data/init.d:/docker-entrypoint-initdb.d
+    healthcheck:
+      test:
+        [
+            "CMD",
+            "mysqladmin",
+            "ping",
+            "-uuser",
+            "-ppwd",
+            "-h",
+            "localhost",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  mongodb:
+    image: mongo
+    container_name: mongo_db
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo:/data
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=pwd
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=user
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=pwd
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.0
+    container_name: PhpMyAdmin
+    links:
+      - mysql1
+    restart: always
+    ports:
+      - 5013:80
+    environment:
+      - PMA_ARBITRARY=1
+
+volumes:
+  mongo: {}
+

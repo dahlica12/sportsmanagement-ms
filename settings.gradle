@@ -1,0 +1,6 @@
+include 'api-gateway'
+include 'athletes-service'
+include 'coaches-service'
+include 'teams-service'
+include 'events-service'
+

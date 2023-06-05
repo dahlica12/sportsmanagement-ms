@@ -1,0 +1,21 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title System Context Diagram for Sports Management System
+
+Person(athlete, "Athlete", "An athlete of the Sports League with personal sports events.")
+
+Person(coach, "Coach", "A coach of the Sports League with personal sports events. ")
+
+Person(team, "Team", "A team of the Sports League with personal sports events. ")
+
+System(system, "Sports Event Management System", "Allows users to view information about sports events and teams")
+
+Rel(athlete, system, "Tracks events using")
+Rel(coach, system, "Tracks events using")
+Rel(team, system, "Tracks events using")
+
+
+
+SHOW_LEGEND()
+@enduml

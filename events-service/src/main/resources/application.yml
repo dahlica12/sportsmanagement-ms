@@ -1,0 +1,65 @@
+# Default Spring Profile
+server:
+  error:
+    include-message: always
+
+logging:
+  level:
+    root: INFO
+    com.sportsmanagement: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+
+app:
+  teams-service:
+    host: localhost
+    port: 7001
+  athletes-service:
+    host: localhost
+    port: 7002
+  coaches-service:
+    host: localhost
+    port: 7003
+
+spring:
+  data:
+    mongodb:
+      username: user
+      password: pwd
+      host: localhost
+      port: 27017
+      database: event-db
+      authentication-database: admin
+      auto-index-creation: true
+
+
+
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 5.0.5
+
+---
+# for docker
+
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+spring.data.mongodb.host: mongodb
+spring.data.mongodb.port: 27017
+
+app:
+  teams-service:
+    host: teams-service
+    port: 8080
+  athletes-service:
+    host: athletes-service
+    port: 8080
+  coaches-service:
+    host: coaches-service
+    port: 8080
+
+
+server.port: 8080
